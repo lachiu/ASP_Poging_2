@@ -1,0 +1,64 @@
+﻿@model VoorraadSysteem.ViewModels.VatPercentageListViewModel
+@{
+	ViewData["Title"] = "BTW lijst";
+}
+
+<h1>Lijst BTW percentages</h1>
+<hr />
+<form asp-controller="VatPercentage" asp-action="Search" method="get">
+	<div class="form-actions no-color">
+		<p>
+			Zoek op BTW percentage:
+			<input asp-for="VatPercentageSearch" type="text" value=""/>
+			<input type="submit" value="Zoeken" class="btn btn-default"/>
+			<a asp-controller="VatPercentage" asp-action="Index">Terug naar volledige lijst</a>
+		</p>
+	</div>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th class="col-md-6">
+				@Html.DisplayNameFor(model => model.VatPercentages.First().Percentage)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@{
+			if (Model.VatPercentages.Count>0)
+			{
+				foreach (var percent in Model.VatPercentages)
+				{
+					<tr>
+						<td class="col-md-6">
+							@percent.Percentage
+						</td>
+						<td class="col-md-6">
+							@{
+								if (User.IsInRole("Admin"))
+								{
+									<a asp-action="Edit" asp-route-id="@percent.Id">Wijzig</a> <a asp-action="Delete" asp-route-id="@percent.Id">Delete</a>
+								}
+							}					
+						</td>
+					</tr>
+				}
+			}
+			else
+			{
+				<tr>
+					<td class="col-md-12">
+						Er is geen percentage gevonden.
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+
+<div class="position-absolute fake-add-button" id="add-button">
+	<a asp-action="Create">
+		<i class="bi bi-plus-lg" style="font-size: 50px;"></i>
+	</a>	
+</div>

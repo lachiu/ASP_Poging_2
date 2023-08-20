@@ -1,0 +1,50 @@
+﻿@using VoorraadSysteem.Models;
+@model VoorraadSysteem.ViewModels.TicketDetailsViewModel
+
+@{
+	ViewData["title"] = "Kasticket details";
+}
+
+<h1>Aankoop van @Model.PurchaseDate</h1>
+<h4>@Model.Store</h4>
+<h4>@Model.Total</h4>
+<table>
+	<thead>
+		<tr>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.TicketsProducts.First().Product.Name)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.TicketsProducts.First().Product.Description)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.TicketsProducts.First().UnitPrice)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.TicketsProducts.First().Product.Barcode)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (TicketsProducts ticketproduct in Model.TicketsProducts)
+		{
+			<tr>
+				<td class="col-md-4">
+					@ticketproduct.Product.Name
+				</td>
+				<td class="col-md-4">
+					@ticketproduct.Product.Description
+				</td>
+				<td class="col-md-4">
+					@ticketproduct.UnitPrice
+				</td>
+				<td class="col-md-4">
+					@ticketproduct.Product.Barcode
+				</td>
+			</tr>	
+		}
+	</tbody>
+</table>
+
+
+@Html.ActionLink("Terug", "Index", "Ticket")

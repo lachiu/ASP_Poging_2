@@ -1,0 +1,90 @@
+﻿@model VoorraadSysteem.ViewModels.LocationListViewModel
+@{
+	ViewData["Title"] = "Locatie beheer";
+}
+
+<h1>Locatie beheer</h1>
+<form asp-controller="Location" asp-action="Search" method="get">
+	<div class="form-actions no-color">
+		<p>
+			Zoek op product:
+			<input asp-for="LocationSearch"/>
+			<input type="submit" value="Zoeken" class="btn btn-default"/>
+			<a asp-controller="Location" asp-action="Index">Terug naar volledige lijst</a>
+		</p>
+	</div>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			@{
+				if (User.IsInRole("Admin"))
+				{
+					<th class="col-md-3">
+						@Html.DisplayNameFor(model => model.Locations.First().Name)
+					</th>			
+					<th class="col-md-3">
+						@Html.DisplayNameFor(model => model.Locations.First().User.Name)
+					</th>
+					<th class="col-md-3">
+						Aantal plaatsen
+					</th>
+				}
+				else
+				{
+					<th class="col-md-4">
+						@Html.DisplayNameFor(model => model.Locations.First().Name)
+					</th>
+					<th class="col-md-4">
+						Aantal plaatsen
+					</th>
+				}
+			}
+			
+		</tr>
+	</thead>
+	<tbody>
+		@{
+			if (Model.Locations.Count()>0)
+			{
+				foreach (var location in Model.Locations)
+				{
+					<tr>
+						<td class="col-md-3">
+							@location.Name
+						</td>
+						<td class="col-md-3">
+							@location.User.Name
+						</td>
+						<td class="col-md-3">
+							@location.Stocks.Count()
+						</td>
+						<td>
+							@{
+								if (User.IsInRole("Gebruiker") || User.IsInRole("Admin"))
+								{
+									<a asp-action="Edit" asp-route-id="@location.Id">Wijzig</a> <a asp-action="Details" asp-route-id="@location.Id">Details</a> <a asp-action="Delete" asp-route-id="@location.Id">Delete</a>
+								}
+							}
+						</td>
+					</tr>
+				}
+			}
+			else
+			{
+				<tr>
+					<td class="col-md-12">
+						<p>Er zijn op dit moment nog geen opslag locaties ingesteld.</p>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+
+<div class="position-absolute fake-add-button" id="add-button">
+	<a asp-action="Create">
+		<i class="bi bi-plus-lg" style="font-size: 50px;"></i>
+	</a>	
+</div>

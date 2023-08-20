@@ -1,0 +1,13 @@
+﻿@model VoorraadSysteem.ViewModels.DeleteTicketViewModel
+
+@{
+	ViewData["Title"] = "Verwijderen";
+}
+
+<h1>Verwijder kasticket</h1>
+<h4>Ben je zeker dat je deze wilt verwijderen?</h4>
+
+<form asp-action="Delete">
+	<input type="hidden" asp-for="Id" />
+	<input type="submit" value="Delete" class="btn btn-primary" /> | <a asp-action="Index">Ga terug naar de lijst</a>	
+</form>

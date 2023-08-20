@@ -1,0 +1,27 @@
+﻿@model VoorraadSysteem.ViewModels.ProductDetailsViewModel
+
+@{
+	ViewData["title"] = "Product details";
+}
+
+<h1>@Model.Name details</h1>
+@{
+	if (String.IsNullOrEmpty(Model.Description))
+	{
+		<p>Er is geen beschrijving opgegeven.</p>
+	}
+	else
+	{
+		<p>Beschrijving: @Model.Description</p>
+	}
+
+	if (String.IsNullOrEmpty(Model.Barcode))
+	{
+		<p>Er is geen barcode opgegeven.</p>
+	}
+	else
+	{
+		<p>Barcode: @Model.Barcode</p>
+	}
+}
+@Html.ActionLink("Terug", "Index", "Product")

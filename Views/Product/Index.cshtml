@@ -1,0 +1,55 @@
+﻿@model VoorraadSysteem.ViewModels.ProductListViewModel
+@{
+	ViewData["Title"] = "Product beheer";
+}
+<h1>Product beheer</h1>
+<form asp-controller="Product" asp-action="Search" method="get">
+	<div class="form-actions no-color">
+		<p>
+			Zoek op product:
+			<input asp-for="ProductSearch"/>
+			<input type="submit" value="Zoeken" class="btn btn-default"/>
+			<a asp-controller="Product" asp-action="Index">Terug naar volledige lijst</a>
+		</p>
+	</div>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th class="col-md-6">
+				@Html.DisplayNameFor(model => model.Products.First().Name)
+			</th>
+			<th class="col-md-6">
+				@Html.DisplayNameFor(model => model.Products.First().Barcode)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var product in Model.Products)
+		{
+			<tr>
+				<td class="col-md-4">
+					@product.Name
+				</td>
+				<td class="col-md-4">
+					@product.Barcode
+				</td>				
+				<td>
+					@{
+						if (User.IsInRole("Admin"))
+						{
+							<a asp-action="Edit" asp-route-id="@product.Id">Wijzig</a> <a asp-action="Details" asp-route-id="@product.Id">Details</a> <a asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+						}
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div class="position-absolute fake-add-button" id="add-button">
+	<a asp-action="Create">
+		<i class="bi bi-plus-lg" style="font-size: 50px;"></i>
+	</a>	
+</div>

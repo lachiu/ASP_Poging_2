@@ -1,0 +1,55 @@
+﻿@model VoorraadSysteem.ViewModels.LocationDetailsViewModel
+
+@{
+	ViewData["title"] = "Locatie details";
+}
+
+<h1>Locatie @Model.Name</h1>
+
+@{
+	if (User.Identity.Name == Model.User.Name)
+	{
+		<p>Aangemaakt door jou</p>
+	}
+	else
+	{
+		<p>Aangemaakt door @Model.User.Name</p>
+	}
+}
+
+@{
+	if (Model.Stocks.Count > 0)
+	{
+		<h2>Alle aanwezige producten op deze locatie.</h2>
+		<hr />
+		<table>
+			<thead>
+				<th class="col-md-6">
+					@Html.DisplayNameFor(model => model.Stocks.First().Product.Name)
+				</th>
+				<th class="col-md-6">
+					@Html.DisplayNameFor(model => model.Stocks.First().Qty)
+				</th>
+			</thead>
+			<tbody>			
+				foreach (var stock in Model.Stocks)
+				{
+					<tr>
+						<td class="col-md-6">
+							stock.Product.Name
+						</td>
+						<td class="col-md-6">
+							stock.Qty
+						</td>
+					</tr>					
+				}
+			</tbody>
+		</table>
+	}
+	else
+	{
+		<h2>Er zijn geen producten op voorraad op deze locatie.</h2>
+	}
+}
+
+@Html.ActionLink("Terug", "Index", "Location")

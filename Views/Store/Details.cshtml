@@ -1,0 +1,44 @@
+﻿@model VoorraadSysteem.ViewModels.StoreDetailsViewModel
+
+@{
+	ViewData["title"] = "Winkel details";
+}
+
+<h1>@Model.Name tickets</h1>
+
+<table>
+	<thead>
+		<tr>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Tickets.First().User.Name)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Tickets.First().PurchaseDate)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Tickets.First().Total)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var ticket in Model.Tickets)
+		{
+			<tr>
+				<td class="col-md-4">
+					@ticket.User.Name
+				</td>
+				<td class="col-md-4">
+					@ticket.PurchaseDate					
+				</td>
+				<td class="col-md-4">
+					@ticket.Total
+				</td>
+				@*<td>
+					<a asp-action="Edit" asp-route-id="@ticket.Id">Wijzig</a> <a asp-action="Details" asp-route-id="@ticket.id">Details</a> <a asp-action="Delete" asp-route-id="@ticket.id">Delete</a>
+				</td>*@
+			</tr>
+		}
+	</tbody>
+</table>
+
+@Html.ActionLink("Terug", "Index", "Store")

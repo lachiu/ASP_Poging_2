@@ -1,0 +1,58 @@
+﻿@model VoorraadSysteem.ViewModels.CreateTicketViewModel
+
+@{
+	ViewData["Title"] = "Nieuw kasticket toevoegen";
+}
+
+<h1>Aanmaken</h1>
+<h4>Kasticket</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="StoreId" class="control-label">Winkel</label>
+				<select asp-for="StoreId" class="form-control" id="StoreId">
+					@foreach (var store in Model.Stores)
+					{
+							<option value="@store.Id">@store.Name</option>
+					}
+				</select>
+				<span asp-validation-for="StoreId" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Total" class="control-label">Totaal</label>
+				<input asp-for="Total" class="form-control" />
+				<span asp-validation-for="Total" class="text-danger"></span>
+			</div>			<div class="form-group">
+				<label asp-for="PurchaseDate" class="control-label">Aankoopdatum</label>
+				<input asp-for="PurchaseDate" class="form-control" />
+				<span asp-validation-for="PurchaseDate" class="text-danger"></span>
+			</div>
+
+			@*Tijdgebrek*@
+			<div class="form-group">				
+				<input type="hidden" asp-for="UserId" value="1" class="form-control" />				
+			</div>			<div class="form-group">			@foreach (var product in Model.Products)
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="@product.Id" id="flexCheckDefault">
+					<label class="form-check-label" for="flexCheckDefault">
+						@product.Name - @product.Description - @product.Description
+					</label>
+				</div>
+			}
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Ga terug naar de lijst</a>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

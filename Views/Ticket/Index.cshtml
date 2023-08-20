@@ -1,0 +1,58 @@
+﻿@model VoorraadSysteem.ViewModels.TicketListViewModel
+@{
+	ViewData["Title"] = "Kasticket beheer";
+}
+
+<h1>Kasticket beheer</h1>
+
+<form asp-controller="Ticket" asp-action="Search" method="get">
+	<div class="form-actions no-color">
+		<p>
+			Zoek op winkel:
+			<input asp-for="StoreSearch"/>
+			<input type="submit" value="Zoeken" class="btn btn-default"/>
+			<a asp-controller="Ticket" asp-action="Index">Terug naar volledige lijst</a>
+		</p>
+	</div>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Tickets[0].Store.Name)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Tickets[0].Total)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Tickets[0].PurchaseDate)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var ticket in Model.Tickets)
+		{
+			<tr>
+				<td class="col-md-4">
+					@ticket.Store.Name
+				</td>
+				<td class="col-md-4">
+					@ticket.Total
+				</td>
+				<td class="col-md-4">
+					@ticket.PurchaseDate
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@ticket.Id">Wijzig</a> <a asp-action="Details" asp-route-id="@ticket.Id">Details</a> <a asp-action="Delete" asp-route-id="@ticket.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div class="position-absolute fake-add-button" id="add-button" @*style="top: 750px; right: 0px;"*@>
+	<a asp-action="Create">
+		<i class="bi bi-plus-lg" style="font-size: 50px;"></i>
+	</a>	
+</div>

@@ -1,0 +1,12 @@
+﻿@model VoorraadSysteem.ViewModels.UserDetailsViewModel
+
+@{
+	ViewData["title"] = "Gebruiker details";
+}
+
+<h1>@Model.Name</h1>
+
+<p>Aangemaakt op @Model.CreatedAt</p>
+<p>Laatst ingelogd op @Model.LastLogin</p>
+
+@Html.ActionLink("Terug", "Index", "User")

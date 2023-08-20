@@ -1,0 +1,59 @@
+﻿@model VoorraadSysteem.ViewModels.UserListViewModel
+@{
+	ViewData["Title"] = "Gebruiker beheer";
+}
+
+<h2>Hello Razor!</h2>
+<p>Tekst</p>
+
+<form asp-controller="User" asp-action="Search" method="get">
+	<div class="form-actions no-color">
+		<p>
+			Zoek op product:
+			<input asp-for="UserSearch"/>
+			<input type="submit" value="Zoeken" class="btn btn-default"/>
+			<a asp-controller="User" asp-action="Index">Terug naar volledige lijst</a>
+		</p>
+	</div>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Users[0].Name)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Users[0].CreatedAt)
+			</th>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Users[0].LastLogin)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var user in Model.Users)
+		{
+			<tr>
+				<td class="col-md-4">
+					@user.Name
+				</td>
+				<td class="col-md-4">
+					@user.CreatedAt
+				</td>
+				<td class="col-md-4">
+					@user.LastLogin
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@user.Id">Wijzig</a> <a asp-action="Details" asp-route-id="@user.Id">Details</a> <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div class="position-absolute fake-add-button" id="add-button">
+	<a asp-action="Create">
+		<i class="bi bi-plus-lg" style="font-size: 50px;"></i>
+	</a>	
+</div>

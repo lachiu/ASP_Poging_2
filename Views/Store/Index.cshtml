@@ -1,0 +1,51 @@
+﻿@model VoorraadSysteem.ViewModels.StoreListViewModel
+@{
+	ViewData["Title"] = "Winkellijst";
+}
+
+<h1>Winkellijst</h1>
+<hr />
+<form asp-controller="Store" asp-action="Search" method="get">
+	<div class="form-actions no-color">
+		<p>
+			Zoek op product:
+			<input asp-for="StoreSearch"/>
+			<input type="submit" value="Zoeken" class="btn btn-default"/>
+			<a asp-controller="Store" asp-action="Index">Terug naar volledige lijst</a>
+		</p>
+	</div>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th class="col-md-4">
+				@Html.DisplayNameFor(model => model.Stores[0].Name)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var store in Model.Stores)
+		{
+			<tr>
+				<td class="col-md-4">
+					@store.Name
+				</td>
+				<td>
+					@{
+						if (User.IsInRole("Admin"))
+						{
+							<a asp-action="Edit" asp-route-id="@store.Id">Wijzig</a> <a asp-action="Details" asp-route-id="@store.Id">Details</a> <a asp-action="Delete" asp-route-id="@store.Id">Delete</a>
+						}
+					}					
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div class="position-absolute fake-add-button" id="add-button">
+	<a asp-action="Create">
+		<i class="bi bi-plus-lg" style="font-size: 50px;"></i>
+	</a>	
+</div>
